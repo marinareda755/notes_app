@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:notes_app/cubits/add_note_cubit/add_note_cubit.dart';
 
 class ColorItem extends StatelessWidget {
   const ColorItem({super.key, required this.isActive, required this.color});
@@ -8,7 +10,7 @@ class ColorItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return isActive
-        ?  CircleAvatar(
+        ? CircleAvatar(
             radius: 38,
             backgroundColor: Colors.white,
             child: CircleAvatar(
@@ -16,9 +18,9 @@ class ColorItem extends StatelessWidget {
               backgroundColor: color,
             ),
           )
-        :  CircleAvatar(
+        : CircleAvatar(
             radius: 38,
-            backgroundColor:color,
+            backgroundColor: color,
           );
   }
 }
@@ -32,8 +34,8 @@ class ColorsListView extends StatefulWidget {
 
 class _ColorsListViewState extends State<ColorsListView> {
   int currentIndex = 0;
-  List<Color> colors = const[
-    Color(0xff41463d),
+  List<Color> colors = const [
+    Color(0xff537D8D),
     Color(0xff9d8df1),
     Color(0xffb8cdf8),
     Color(0xff95f2d9),
@@ -52,10 +54,12 @@ class _ColorsListViewState extends State<ColorsListView> {
               child: GestureDetector(
                 onTap: () {
                   currentIndex = index;
+                  BlocProvider.of<AddNoteCubit>(context).color = colors[index];
                   setState(() {});
                 },
                 child: ColorItem(
-                  isActive: currentIndex == index, color: colors[index],
+                  isActive: currentIndex == index,
+                  color: colors[index],
                 ),
               ),
             );
